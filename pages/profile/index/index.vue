@@ -61,6 +61,17 @@
 
     <view class="menu-sections">
       <view class="section">
+        <text class="section-title">账号信息</text>
+        <view class="menu-list">
+          <view class="menu-item">
+            <uni-icons type="person" size="20" color="#333"></uni-icons>
+            <text class="menu-name">用户角色</text>
+            <text class="menu-extra">{{ userStore.userInfo?.roleName || '普通用户' }}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="section">
         <text class="section-title">内容管理</text>
         <view class="menu-list">
           <view class="menu-item" @click="goToPage('/pages/profile/my-posts/my-posts')">
@@ -155,6 +166,11 @@
             <view v-if="hasPrivacyUpdate" class="new-tag">New</view>
             <uni-icons type="right" size="16" color="#999"></uni-icons>
           </view>
+          <view class="menu-item logout-item" @click="handleLogout">
+            <uni-icons type="closeempty" size="20" color="#ff4d4f"></uni-icons>
+            <text class="menu-name logout-text">退出登录</text>
+            <uni-icons type="right" size="16" color="#ff4d4f"></uni-icons>
+          </view>
         </view>
       </view>
     </view>
@@ -162,8 +178,6 @@
     <view class="footer-uid">
       <text>UID: {{ userInfo.uid }}</text>
     </view>
-
-    <custom-tabbar />
   </view>
 </template>
 
@@ -247,6 +261,20 @@ function goToPage(url) {
 function goToRiderOrders() {
   uni.switchTab({ url: '/pages/mutual/list/list' })
 }
+
+function handleLogout() {
+  uni.showModal({
+    title: '确认退出',
+    content: '退出后需重新登录才能继续使用',
+    confirmText: '退出登录',
+    cancelText: '取消',
+    success: (res) => {
+      if (res.confirm) {
+        userStore.logout()
+      }
+    }
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -264,7 +292,7 @@ $border-radius: 12px;
 .page {
   min-height: 100vh;
   background-color: $bg-color;
-  padding-bottom: 60px;
+  padding-bottom: 30px;
 }
 
 .profile-header {
@@ -500,6 +528,17 @@ $border-radius: 12px;
           border-radius: 4px;
           margin-right: 8px;
           font-weight: 600;
+        }
+
+        &.logout-item {
+          &:active {
+            background: #fff1f0;
+          }
+
+          .menu-name.logout-text {
+            color: #ff4d4f;
+            font-weight: 600;
+          }
         }
       }
     }

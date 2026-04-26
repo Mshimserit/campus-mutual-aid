@@ -1,93 +1,64 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
-import { mockUser, mockBannedUser, mockUserProfile, mockAuthForm, mockCampusOptions } from '@/mock/user'
-import { useStorage } from '@/utils/storage'
+import { mockUsers } from '@/mock/user'
+import * as storage from '@/utils/storage'
 
-const { get, set, remove } = useStorage('campus_user')
+export const useUserStore = defineStore('user', {
+  state: () => ({
+    userInfo: storage.get('userInfo', null),
+    isLoggedIn: !!storage.get('userInfo', null),
+    loginError: ''
+  }),
 
-export const useUserStore = defineStore('user', () => {
-  const userInfo = ref(get() || { ...mockUser })
-  const bannedInfo = ref(null)
-  const userProfile = ref({ ...mockUserProfile })
-  const authForm = ref({ ...mockAuthForm })
-  const campusOptions = ref(mockCampusOptions)
+  getters: {
+    userRole: (state) => state.userInfo?.role || 'guest',
+    isAdmin: (state) => state.userInfo?.role === 'admin',
+    isRunner: (state) => state.userInfo?.role === 'runner',
+    isStudent: (state) => state.userInfo?.role === 'student'
+  },
 
-  const isLoggedIn = computed(() => !!userInfo.value && !!userInfo.value.id)
-  const isAuthed = computed(() => userInfo.value?.isAuthed || false)
-  const isBanned = computed(() => !!bannedInfo.value)
-  const canPost = computed(() => isLoggedIn.value && !isBanned.value)
-  const canComment = computed(() => canPost.value)
-  const canMutual = computed(() => canPost.value && isAuthed.value)
-  const canWithdraw = computed(() => canMutual.value)
+  actions: {
+    setUserInfo(user) {
+      this.userInfo = { ...this.userInfo, ...user }
+      storage.set('userInfo', this.userInfo)
+    },
 
-  const isAuthedWith = (campus) => {
-    return isAuthed.value && userInfo.value?.campus === campus
-  }
+    async login(username, password) {
+      this.loginError = ''
 
-  function updateProfile(data) {
-    userProfile.value = { ...userProfile.value, ...data }
-  }
-
-  function updateAuthForm(data) {
-    authForm.value = { ...authForm.value, ...data }
-  }
-
-  async function submitAuth() {
-    try {
-      userInfo.value.isAuthed = true
-      userInfo.value.authCampus = authForm.value.campus
-      mockUser.isAuthed = true
-      mockUser.authCampus = authForm.value.campus
-      return { success: true }
-    } catch (e) {
-      return { success: false, error: e }
-    }
-  }
-
-  async function mockLogin(username, password) {
-    if (username && password) {
-      const newUser = {
-        ...mockUser,
-        id: 'u_' + Math.floor(Math.random() * 10000),
-        uid: String(1000000000 + Math.floor(Math.random() * 9000000000)),
-        username: username,
-        nickname: username,
-        campus: '未认证'
+      if (!username || !password) {
+        this.loginError = '请输入用户名和密码'
+        return false
       }
-      userInfo.value = newUser
-      Object.assign(mockUser, newUser)
-      set(userInfo.value)
-      return { success: true, user: newUser }
+
+      const user = mockUsers.find(u => u.username === username && u.password === password)
+
+      if (!user) {
+        this.loginError = '用户名或密码错误'
+        return false
+      }
+
+      const { password: pwd, ...userInfo } = user
+
+      this.userInfo = userInfo
+      this.isLoggedIn = true
+      storage.set('userInfo', userInfo)
+
+      return true
+    },
+
+    logout() {
+      this.userInfo = null
+      this.isLoggedIn = false
+      this.loginError = ''
+      storage.remove('userInfo')
+
+      uni.reLaunch({
+        url: '/pages/login/login'
+      })
+    },
+
+    clearError() {
+      this.loginError = ''
     }
-    return { success: false, error: '用户名或密码不能为空' }
-  }
-
-  function logout() {
-    userInfo.value = null
-    bannedInfo.value = null
-    remove()
-  }
-
-  function checkBanStatus() {
-    const banData = { ...mockBannedUser }
-    if (banData.isBanned) {
-      bannedInfo.value = banData
-    }
-    return banData.isBanned
-  }
-
-  async function submitAppeal(content) {
-    try {
-      return { success: true, message: '申诉已提交' }
-    } catch (e) {
-      return { success: false, error: e }
-    }
-  }
-
-  return {
-    userInfo, bannedInfo, userProfile, authForm, campusOptions,
-    isLoggedIn, isAuthed, isBanned, canPost, canComment, canMutual, canWithdraw,
-    isAuthedWith, updateProfile, updateAuthForm, submitAuth,
-    mockLogin, logout, checkBanStatus, submitAppeal
   }
 })

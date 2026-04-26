@@ -134,8 +134,6 @@
         <uni-load-more v-if="posts.length > 0" :status="loading ? 'loading' : 'nomore'" />
       </view>
     </scroll-view>
-
-    <custom-tabbar />
   </view>
 </template>
 
@@ -369,7 +367,6 @@ $border-radius-sm: 8px;
   display: flex;
   flex-direction: column;
   background-color: $bg-color;
-  padding-bottom: 60px;
 }
 
 .header {

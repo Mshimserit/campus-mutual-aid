@@ -112,8 +112,6 @@
         </view>
       </view>
     </view>
-
-    <custom-tabbar />
   </view>
 </template>
 
@@ -319,7 +317,6 @@ $border-radius: 12px;
 .page {
   min-height: 100vh;
   background-color: $bg-color;
-  padding-bottom: 60px;
 }
 
 .guide-banner {

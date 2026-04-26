@@ -1,14 +1,85 @@
 <script>
+	import { useUserStore } from '@/stores/user-store'
+	
+	const publicPages = ['pages/login/login']
+	
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			this.checkLoginStatus()
+			this.setupRouteGuards()
 		},
 		onShow: function() {
 			console.log('App Show')
+			this.checkLoginStatus()
 		},
 		onHide: function() {
 			console.log('App Hide')
+		},
+		methods: {
+			checkLoginStatus() {
+				const userStore = useUserStore()
+				
+				if (!userStore.isLoggedIn) {
+					uni.reLaunch({
+						url: '/pages/login/login'
+					})
+				}
+			},
+			setupRouteGuards() {
+				const userStore = useUserStore()
+				
+				uni.addInterceptor('navigateTo', {
+					invoke(e) {
+						return handleNavigation(e.url, userStore)
+					}
+				})
+				
+				uni.addInterceptor('redirectTo', {
+					invoke(e) {
+						return handleNavigation(e.url, userStore)
+					}
+				})
+				
+				uni.addInterceptor('reLaunch', {
+					invoke(e) {
+						return handleNavigation(e.url, userStore)
+					}
+				})
+				
+				uni.addInterceptor('switchTab', {
+					invoke(e) {
+						return handleNavigation(e.url, userStore)
+					}
+				})
+			}
 		}
+	}
+	
+	function handleNavigation(url, userStore) {
+		const targetPage = extractPageName(url)
+		
+		if (!userStore.isLoggedIn && !publicPages.includes(targetPage)) {
+			uni.redirectTo({
+				url: '/pages/login/login'
+			})
+			return false
+		}
+		
+		if (userStore.isLoggedIn && targetPage === 'pages/login/login') {
+			uni.redirectTo({
+				url: '/pages/index/index'
+			})
+			return false
+		}
+		
+		return true
+	}
+	
+	function extractPageName(url) {
+		const path = url.split('?')[0]
+		const normalizedPath = path.startsWith('/') ? path.slice(1) : path
+		return normalizedPath
 	}
 </script>
 

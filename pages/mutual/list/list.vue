@@ -42,8 +42,6 @@
       <uni-icons type="plus" size="24" color="#FFFFFF"></uni-icons>
       <text class="fab-text">发布</text>
     </view>
-
-    <custom-tabbar />
   </view>
 </template>
 
@@ -177,7 +175,7 @@ $border-radius: 12px;
 .page {
   min-height: 100vh;
   background-color: $bg-color;
-  padding-bottom: 60px;
+  padding-bottom: 80px;
 }
 
 .filter-tabs {
