@@ -8,11 +8,31 @@
 			@click="switchTab(index)"
 		>
 			<view class="tabbar-icon">
-				<component
-					:is="current === index ? item.selectedIcon : item.icon"
-					:size="24"
-					:color="current === index ? selectedColor : color"
-				/>
+				<!-- 首页 -->
+				<template v-if="item.pagePath === '/pages/index/index'">
+					<VuHome v-if="current === index" :size="24" :color="selectedColor" />
+					<VuHome v-else :size="24" :color="color" />
+				</template>
+				<!-- 互助 -->
+				<template v-else-if="item.pagePath === '/pages/mutual/list/list'">
+					<VuHandshake v-if="current === index" :size="24" :color="selectedColor" />
+					<VuHandshake v-else :size="24" :color="color" />
+				</template>
+				<!-- 发布 -->
+				<template v-else-if="item.pagePath === '/pages/post/post'">
+					<VuPlusSquare v-if="current === index" :size="24" :color="selectedColor" />
+					<VuPlusSquare v-else :size="24" :color="color" />
+				</template>
+				<!-- 消息 -->
+				<template v-else-if="item.pagePath === '/pages/message/message'">
+					<VuBell v-if="current === index" :size="24" :color="selectedColor" />
+					<VuBell v-else :size="24" :color="color" />
+				</template>
+				<!-- 我的 -->
+				<template v-else-if="item.pagePath === '/pages/profile/index/index'">
+					<VuUser v-if="current === index" :size="24" :color="selectedColor" />
+					<VuUser v-else :size="24" :color="color" />
+				</template>
 			</view>
 			<text
 				class="tabbar-text"
@@ -46,33 +66,23 @@ const safeAreaBottom = computed(() => {
 const tabList = ref([
 	{
 		pagePath: '/pages/index/index',
-		text: '首页',
-		icon: VuHome,
-		selectedIcon: VuHome
+		text: '首页'
 	},
 	{
 		pagePath: '/pages/mutual/list/list',
-		text: '互助',
-		icon: VuHandshake,
-		selectedIcon: VuHandshake
+		text: '互助'
 	},
 	{
 		pagePath: '/pages/post/post',
-		text: '发布',
-		icon: VuPlusSquare,
-		selectedIcon: VuPlusSquare
+		text: '发布'
 	},
 	{
 		pagePath: '/pages/message/message',
-		text: '消息',
-		icon: VuBell,
-		selectedIcon: VuBell
+		text: '消息'
 	},
 	{
 		pagePath: '/pages/profile/index/index',
-		text: '我的',
-		icon: VuUser,
-		selectedIcon: VuUser
+		text: '我的'
 	}
 ])
 
