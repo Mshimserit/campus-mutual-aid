@@ -14,6 +14,8 @@
         </view>
       </view>
     </view>
+
+    <custom-tabbar />
   </view>
 </template>
 

@@ -180,6 +180,7 @@
 		"backgroundColor": "#F5F5F5"
 	},
 	"tabBar": {
+		"custom": true,
 		"color": "#999999",
 		"selectedColor": "#1890ff",
 		"borderStyle": "black",
@@ -187,33 +188,23 @@
 		"list": [
 			{
 				"pagePath": "pages/index/index",
-				"text": "首页",
-				"iconPath": "static/tabbar/home.png",
-				"selectedIconPath": "static/tabbar/home-active.png"
+				"text": "首页"
 			},
 			{
 				"pagePath": "pages/mutual/list/list",
-				"text": "互助",
-				"iconPath": "static/tabbar/mutual.png",
-				"selectedIconPath": "static/tabbar/mutual-active.png"
+				"text": "互助"
 			},
 			{
 				"pagePath": "pages/post/post",
-				"text": "发布",
-				"iconPath": "static/tabbar/post.png",
-				"selectedIconPath": "static/tabbar/post-active.png"
+				"text": "发布"
 			},
 			{
 				"pagePath": "pages/message/message",
-				"text": "消息",
-				"iconPath": "static/tabbar/message.png",
-				"selectedIconPath": "static/tabbar/message-active.png"
+				"text": "消息"
 			},
 			{
 				"pagePath": "pages/profile/index/index",
-				"text": "我的",
-				"iconPath": "static/tabbar/profile.png",
-				"selectedIconPath": "static/tabbar/profile-active.png"
+				"text": "我的"
 			}
 		]
 	},

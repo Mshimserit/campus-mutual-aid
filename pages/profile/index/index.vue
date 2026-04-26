@@ -162,6 +162,8 @@
     <view class="footer-uid">
       <text>UID: {{ userInfo.uid }}</text>
     </view>
+
+    <custom-tabbar />
   </view>
 </template>
 
@@ -262,7 +264,7 @@ $border-radius: 12px;
 .page {
   min-height: 100vh;
   background-color: $bg-color;
-  padding-bottom: 30px;
+  padding-bottom: 60px;
 }
 
 .profile-header {
