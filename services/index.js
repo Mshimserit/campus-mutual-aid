@@ -1,0 +1,6 @@
+export { orderService } from './order-service'
+export { userService } from './user-service'
+export { walletService } from './wallet-service'
+export { paymentService } from './payment-service'
+export { postService } from './post-service'
+export { messageService } from './message-service'
