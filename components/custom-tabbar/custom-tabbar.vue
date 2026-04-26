@@ -20,8 +20,8 @@
 				</template>
 				<!-- 发布 -->
 				<template v-else-if="item.pagePath === '/pages/post/post'">
-					<VuPlusSquare v-if="current === index" :size="24" :color="selectedColor" />
-					<VuPlusSquare v-else :size="24" :color="color" />
+					<VuSquarePlus v-if="current === index" :size="24" :color="selectedColor" />
+					<VuSquarePlus v-else :size="24" :color="color" />
 				</template>
 				<!-- 消息 -->
 				<template v-else-if="item.pagePath === '/pages/message/message'">
@@ -49,7 +49,7 @@ import { ref, computed } from 'vue'
 import {
 	VuHome,
 	VuHandshake,
-	VuPlusSquare,
+	VuSquarePlus,
 	VuBell,
 	VuUser
 } from 'vu-icons/uniapp'
