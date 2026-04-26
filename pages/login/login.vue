@@ -67,6 +67,7 @@ import { useUserStore } from '@/stores/user-store'
 export default {
 	data() {
 		return {
+			userStore: useUserStore(),
 			username: '',
 			password: '',
 			errors: {
