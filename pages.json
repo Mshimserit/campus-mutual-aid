@@ -26,9 +26,47 @@
 			}
 		},
 		{
+			"path": "pages/mutual/detail/detail",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages/mutual/publish/publish",
+			"style": {
+				"navigationBarTitleText": "发布需求"
+			}
+		},
+		{
+			"path": "pages/mutual/payment/payment",
+			"style": {
+				"navigationBarTitleText": "支付佣金"
+			}
+		},
+		{
+			"path": "pages/mutual/auth/auth",
+			"style": {
+				"navigationBarTitleText": "骑手认证"
+			}
+		},
+		{
 			"path": "pages/post/post",
 			"style": {
 				"navigationBarTitleText": "帖子"
+			}
+		},
+		{
+			"path": "pages/post/editor/editor",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "发布帖子"
+			}
+		},
+		{
+			"path": "pages/post/detail/detail",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "帖子详情"
 			}
 		},
 		{
@@ -49,6 +87,96 @@
 			"path": "pages/profile/index/index",
 			"style": {
 				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/profile/center/center",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/profile/wallet/wallet",
+			"style": {
+				"navigationBarTitleText": "我的钱包"
+			}
+		},
+		{
+			"path": "pages/profile/wallet/withdraw",
+			"style": {
+				"navigationBarTitleText": "提现"
+			}
+		},
+		{
+			"path": "pages/profile/my-posts/my-posts",
+			"style": {
+				"navigationBarTitleText": "我的帖子"
+			}
+		},
+		{
+			"path": "pages/profile/my-comments/my-comments",
+			"style": {
+				"navigationBarTitleText": "历史评论"
+			}
+		},
+		{
+			"path": "pages/profile/my-watch/my-watch",
+			"style": {
+				"navigationBarTitleText": "我的蹲贴"
+			}
+		},
+		{
+			"path": "pages/profile/my-favorites/my-favorites",
+			"style": {
+				"navigationBarTitleText": "我的收藏"
+			}
+		},
+		{
+			"path": "pages/profile/service/customer-service",
+			"style": {
+				"navigationBarTitleText": "客服"
+			}
+		},
+		{
+			"path": "pages/profile/service/help-center",
+			"style": {
+				"navigationBarTitleText": "帮助中心"
+			}
+		},
+		{
+			"path": "pages/profile/service/appeal",
+			"style": {
+				"navigationBarTitleText": "封禁申诉"
+			}
+		},
+		{
+			"path": "pages/profile/service/feedback",
+			"style": {
+				"navigationBarTitleText": "建议反馈"
+			}
+		},
+		{
+			"path": "pages/profile/settings/business",
+			"style": {
+				"navigationBarTitleText": "商务合作"
+			}
+		},
+		{
+			"path": "pages/profile/settings/create-circle",
+			"style": {
+				"navigationBarTitleText": "开通圈子"
+			}
+		},
+		{
+			"path": "pages/profile/settings/user-agreement",
+			"style": {
+				"navigationBarTitleText": "用户协议"
+			}
+		},
+		{
+			"path": "pages/profile/settings/privacy-policy",
+			"style": {
+				"navigationBarTitleText": "隐私政策"
 			}
 		}
 	],
@@ -98,154 +226,6 @@
 			}
 		]
 	},
-	"subPackages": [
-		{
-			"root": "pages/mutual",
-			"name": "mutual",
-			"pages": [
-				{
-					"path": "detail/detail",
-					"style": {
-						"navigationBarTitleText": "订单详情"
-					}
-				},
-				{
-					"path": "publish/publish",
-					"style": {
-						"navigationBarTitleText": "发布需求"
-					}
-				},
-				{
-					"path": "payment/payment",
-					"style": {
-						"navigationBarTitleText": "支付佣金"
-					}
-				},
-				{
-					"path": "auth/auth",
-					"style": {
-						"navigationBarTitleText": "骑手认证"
-					}
-				}
-			]
-		},
-		{
-			"root": "pages/profile",
-			"name": "profile",
-			"pages": [
-				{
-					"path": "center/center",
-					"style": {
-						"navigationBarTitleText": "个人中心"
-					}
-				},
-				{
-					"path": "wallet/wallet",
-					"style": {
-						"navigationBarTitleText": "我的钱包"
-					}
-				},
-				{
-					"path": "wallet/withdraw",
-					"style": {
-						"navigationBarTitleText": "提现"
-					}
-				},
-				{
-					"path": "my-posts/my-posts",
-					"style": {
-						"navigationBarTitleText": "我的帖子"
-					}
-				},
-				{
-					"path": "my-comments/my-comments",
-					"style": {
-						"navigationBarTitleText": "历史评论"
-					}
-				},
-				{
-					"path": "my-watch/my-watch",
-					"style": {
-						"navigationBarTitleText": "我的蹲贴"
-					}
-				},
-				{
-					"path": "my-favorites/my-favorites",
-					"style": {
-						"navigationBarTitleText": "我的收藏"
-					}
-				},
-				{
-					"path": "service/customer-service",
-					"style": {
-						"navigationBarTitleText": "客服"
-					}
-				},
-				{
-					"path": "service/help-center",
-					"style": {
-						"navigationBarTitleText": "帮助中心"
-					}
-				},
-				{
-					"path": "service/appeal",
-					"style": {
-						"navigationBarTitleText": "封禁申诉"
-					}
-				},
-				{
-					"path": "service/feedback",
-					"style": {
-						"navigationBarTitleText": "建议反馈"
-					}
-				},
-				{
-					"path": "settings/business",
-					"style": {
-						"navigationBarTitleText": "商务合作"
-					}
-				},
-				{
-					"path": "settings/create-circle",
-					"style": {
-						"navigationBarTitleText": "开通圈子"
-					}
-				},
-				{
-					"path": "settings/user-agreement",
-					"style": {
-						"navigationBarTitleText": "用户协议"
-					}
-				},
-				{
-					"path": "settings/privacy-policy",
-					"style": {
-						"navigationBarTitleText": "隐私政策"
-					}
-				}
-			]
-		},
-		{
-			"root": "pages/post",
-			"name": "post",
-			"pages": [
-				{
-					"path": "editor/editor",
-					"style": {
-						"navigationStyle": "custom",
-						"navigationBarTitleText": "发布帖子"
-					}
-				},
-				{
-					"path": "detail/detail",
-					"style": {
-						"navigationStyle": "custom",
-						"navigationBarTitleText": "帖子详情"
-					}
-				}
-			]
-		}
-	],
 	"easycom": {
 		"autoscan": true,
 		"custom": {
