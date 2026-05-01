@@ -14,6 +14,7 @@
         </view>
       </view>
     </view>
+    <custom-tabbar :selected="2" />
   </view>
 </template>
 
@@ -21,14 +22,14 @@
 const postTypes = [
   { label: '分享吐槽', value: 'share', icon: 'chat', color: '#1890ff' },
   { label: '求助答疑', value: 'help', icon: 'help', color: '#fa8c16' },
-  { label: '组队交友', value: 'social', icon: 'friend', color: '#52c41a' },
+  { label: '组队交友', value: 'social', icon: 'personadd', color: '#52c41a' },
   { label: '二手闲置', value: 'secondhand', icon: 'shop', color: '#722ed1' },
   { label: '树洞', value: 'secret', icon: 'locked', color: '#eb2f96' }
 ]
 
 function selectType(type) {
   uni.navigateTo({
-    url: `/pages/post/editor/editor?type=${type.value}&label=${type.label}`
+    url: `/pagesSub/post/editor/editor?type=${type.value}&label=${type.label}`
   })
 }
 </script>

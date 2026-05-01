@@ -48,7 +48,7 @@
         class="action-item"
         @click="onActionClick(item)"
       >
-        <image :src="item.icon" class="action-icon" mode="aspectFit" @error="onImageError($event, index)" />
+        <uni-icons :type="item.icon" size="28" :color="item.color || '#FF6B6B'"></uni-icons>
         <text class="action-text">{{ item.name }}</text>
       </view>
     </view>
@@ -73,7 +73,7 @@
 
       <view v-else-if="posts.length === 0" class="empty-wrapper">
         <view class="empty-content">
-          <image src="/static/logo.png" class="empty-icon" mode="aspectFit" />
+          <uni-icons type="paperclip" size="60" color="#d9d9d9"></uni-icons>
           <text class="empty-text">暂无帖子</text>
         </view>
       </view>
@@ -134,6 +134,7 @@
         <uni-load-more v-if="posts.length > 0" :status="loading ? 'loading' : 'nomore'" />
       </view>
     </scroll-view>
+    <custom-tabbar :selected="0" />
   </view>
 </template>
 
@@ -177,11 +178,11 @@ const banners = ref([
 ])
 
 const quickActions = ref([
-  { name: '互助跑腿', icon: '/static/c1.png', path: '/pages/mutual/list/list' },
-  { name: '论坛群', icon: '/static/c2.png', path: '' },
-  { name: '二手闲置', icon: '/static/c3.png', path: '' },
-  { name: '5分打印', icon: '/static/c6.png', path: '' },
-  { name: '宿舍夜宵', icon: '/static/c7.png', path: '' }
+  { name: '互助跑腿', icon: 'staff', color: '#FF6B6B', path: '/pages/mutual/list/list' },
+  { name: '论坛群', icon: 'chatbubble', color: '#1890ff', path: '' },
+  { name: '二手闲置', icon: 'shop', color: '#52c41a', path: '' },
+  { name: '5分打印', icon: 'star', color: '#faad14', path: '' },
+  { name: '宿舍夜宵', icon: 'shop', color: '#722ed1', path: '' }
 ])
 
 const tabs = ref([
@@ -292,15 +293,15 @@ function toggleFavorite(post) {
 }
 
 function goToPostDetail(id) {
-  uni.navigateTo({ url: `/pages/post/detail/detail?id=${id}` })
+  uni.navigateTo({ url: `/pagesSub/post/detail/detail?id=${id}` })
 }
 
 function goToSearch() {
-  uni.navigateTo({ url: '/pages/search/search' })
+  uni.navigateTo({ url: '/pagesSub/common/search/search' })
 }
 
 function goToHot() {
-  uni.navigateTo({ url: '/pages/hot/hot' })
+  uni.navigateTo({ url: '/pagesSub/common/hot/hot' })
 }
 
 function goToMessage() {
@@ -330,10 +331,6 @@ function onPageScroll(e) {
   }
 
   lastScrollTop.value = scrollTop
-}
-
-function onImageError(e, index) {
-  quickActions.value[index].icon = '/static/logo.png'
 }
 
 function onAvatarError(e) {

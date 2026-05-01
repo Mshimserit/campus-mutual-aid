@@ -1,14 +1,14 @@
 <template>
   <view class="status-tag">
-    <view :class="['tag', colorClass]">
-      <text>{{ text }}</text>
+    <view :style="{ backgroundColor: config.bgColor }" class="tag">
+      <text :style="{ color: config.color }">{{ text }}</text>
     </view>
   </view>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import { STATUS_CONFIG } from '@/utils/status-machine'
+import { STATUS_CONFIG } from '@/utils/status-machine.js'
 
 const props = defineProps({
   status: {
@@ -18,31 +18,27 @@ const props = defineProps({
 })
 
 const config = computed(() => {
-  return STATUS_CONFIG[props.status] || STATUS_CONFIG.PENDING
+  const status = typeof props.status === 'string' ? props.status : ''
+  return STATUS_CONFIG[status] || STATUS_CONFIG.PENDING
 })
 
 const text = computed(() => config.value.text)
-
-const colorClass = computed(() => {
-  return `tag-${config.value.color}`
-})
 </script>
 
 <style lang="scss" scoped>
 .status-tag {
   .tag {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
     text {
-      color: #fff;
+      font-weight: 500;
+      white-space: nowrap;
     }
-
-    &.tag-gray, &.tag-grey { background: #8c8c8c; }
-    &.tag-blue { background: #1890ff; }
-    &.tag-orange { background: #fa8c16; }
-    &.tag-green { background: #52c41a; }
   }
 }
 </style>

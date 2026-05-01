@@ -52,7 +52,7 @@
       <!-- Empty State -->
       <view v-else-if="filteredOrders.length === 0" class="empty-wrapper">
         <empty-state
-          :icon="'/static/logo.png'"
+          icon-type="list"
           :title="getEmptyText()"
           :show-action="currentFilter === 'all'"
           action-text="发布第一个订单"
@@ -85,6 +85,7 @@
       <uni-icons type="plus" size="24" color="#FFFFFF"></uni-icons>
       <text class="fab-text">发布</text>
     </view>
+    <custom-tabbar :selected="1" />
   </view>
 </template>
 
@@ -92,7 +93,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { useOrderStore } from '@/stores/order-store'
 import { useUserStore } from '@/stores/user-store'
-import { orderService } from '@/services/order-service'
 import { useNetworkStatus } from '@/utils/network'
 
 const orderStore = useOrderStore()
@@ -100,14 +100,13 @@ const userStore = useUserStore()
 const { isOnline, requireNetwork, initNetworkListener } = useNetworkStatus()
 
 const currentFilter = ref('all')
-const loading = ref(false)
 const isRefreshing = ref(false)
-const hasMore = ref(true)
-const currentPage = ref(1)
-const pageSize = 10
-const orders = ref([...orderStore.orders])
 
-const loadMoreText = { contentdown: '上拉加载更多', contentrefresh: '加载中...', contentnomore: '没有更多数据了' }
+const loadMoreText = {
+  contentdown: '上拉加载更多',
+  contentrefresh: '加载中...',
+  contentnomore: '没有更多数据了'
+}
 
 const tabs = [
   { label: '全部订单', value: 'all' },
@@ -116,21 +115,13 @@ const tabs = [
   { label: '我帮助的', value: 'myHelped' }
 ]
 
-const filteredOrders = computed(() => {
-  switch (currentFilter.value) {
-    case 'pending':
-      return orders.value.filter(o => o.paid && o.status === 'PENDING' && !o.accepted)
-    case 'myPublished':
-      return orders.value.filter(o => o.paid && o.publisherId === userStore.userInfo?.id)
-    case 'myHelped':
-      return orders.value.filter(o => o.paid && o.acceptorId === userStore.userInfo?.id)
-    default:
-      return orders.value.filter(o => o.paid)
-  }
-})
+const filteredOrders = computed(() => orderStore.filteredOrders(currentFilter.value))
+const loading = computed(() => orderStore.loading)
+const hasMore = computed(() => orderStore.hasMore)
 
 onMounted(() => {
   initNetworkListener()
+  orderStore.clearOrders()
   loadOrders()
 })
 
@@ -138,27 +129,18 @@ async function loadOrders() {
   const connected = await requireNetwork()
   if (!connected) return
 
-  loading.value = true
   try {
-    const data = await orderService.getOrders({ filter: currentFilter.value, page: 1 })
-    orders.value = data
-    hasMore.value = false
+    await orderStore.loadOrders({ filter: currentFilter.value, page: 1, refresh: true })
   } catch (e) {
     uni.showToast({ title: '加载失败，请重试', icon: 'none' })
-  } finally {
-    loading.value = false
   }
 }
 
 async function onRefresh() {
   isRefreshing.value = true
-  currentPage.value = 1
-  hasMore.value = true
 
   try {
-    const data = await orderService.getOrders({ filter: currentFilter.value, page: 1 })
-    orders.value = data
-    hasMore.value = false
+    await orderStore.loadOrders({ filter: currentFilter.value, page: 1, refresh: true })
   } catch (e) {
     uni.showToast({ title: '刷新失败', icon: 'none' })
   } finally {
@@ -167,40 +149,25 @@ async function onRefresh() {
 }
 
 async function onLoadMore() {
-  if (!hasMore.value || loading.value) return
-
   const connected = await requireNetwork()
   if (!connected) return
 
-  loading.value = true
-  currentPage.value += 1
-
   try {
-    const data = await orderService.getOrders({ filter: currentFilter.value, page: currentPage.value })
-    if (data.length < pageSize) {
-      hasMore.value = false
-    } else {
-      orders.value = [...orders.value, ...data]
-    }
+    await orderStore.loadMoreOrders(currentFilter.value)
   } catch (e) {
     uni.showToast({ title: '加载更多失败', icon: 'none' })
-    currentPage.value -= 1
-  } finally {
-    loading.value = false
   }
 }
 
 function switchFilter(filter) {
   currentFilter.value = filter
-  currentPage.value = 1
-  hasMore.value = true
   loadOrders()
 }
 
 async function onAcceptOrder(orderId) {
   const user = userStore.userInfo
   if (!user || !user.certified) {
-    uni.navigateTo({ url: '/pages/mutual/auth/auth' })
+    uni.navigateTo({ url: '/pagesSub/mutual/auth/auth' })
     return
   }
 
@@ -210,13 +177,12 @@ async function onAcceptOrder(orderId) {
   uni.showLoading({ title: '接单中...' })
 
   try {
-    orderStore.acceptOrder(orderId, { id: user.id, nickname: user.nickname || user.name })
-    await orderService.acceptOrder(orderId)
+    await orderStore.acceptOrder(orderId, { id: user.id, nickname: user.nickname || user.name })
     uni.hideLoading()
     uni.showToast({ title: '接单成功', icon: 'success' })
 
     setTimeout(() => {
-      uni.navigateTo({ url: `/pages/mutual/detail/detail?id=${orderId}` })
+      uni.navigateTo({ url: `/pagesSub/mutual/detail/detail?id=${orderId}` })
     }, 800)
   } catch (e) {
     uni.hideLoading()
@@ -225,16 +191,16 @@ async function onAcceptOrder(orderId) {
 }
 
 function goToDetail(id) {
-  uni.navigateTo({ url: `/pages/mutual/detail/detail?id=${id}` })
+  uni.navigateTo({ url: `/pagesSub/mutual/detail/detail?id=${id}` })
 }
 
 function goToPublish() {
   const user = userStore.userInfo
   if (!user || !user.certified) {
-    uni.navigateTo({ url: '/pages/mutual/auth/auth' })
+    uni.navigateTo({ url: '/pagesSub/mutual/auth/auth' })
     return
   }
-  uni.navigateTo({ url: '/pages/mutual/publish/publish' })
+  uni.navigateTo({ url: '/pagesSub/mutual/publish/publish' })
 }
 
 function getEmptyText() {

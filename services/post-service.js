@@ -33,6 +33,22 @@ export const postService = {
       return { success: true }
     }
     return post(`/api/posts/${id}/like`)
+  },
+
+  async updatePost(id, data) {
+    if (USE_MOCK) {
+      await delay(300)
+      return { success: true, id }
+    }
+    return post(`/api/posts/${id}/update`, data)
+  },
+
+  async deletePost(id) {
+    if (USE_MOCK) {
+      await delay(200)
+      return { success: true }
+    }
+    return post(`/api/posts/${id}/delete`)
   }
 }
 

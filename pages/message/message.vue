@@ -51,7 +51,7 @@
         <uni-load-more status="loading" />
       </view>
       <view v-else-if="filteredMessages.length === 0" class="empty-wrapper">
-        <image src="/static/logo.png" class="empty-icon" mode="aspectFit" />
+        <uni-icons type="chatboxes" size="60" color="#d9d9d9"></uni-icons>
         <text class="empty-text">暂无消息</text>
       </view>
       <view v-else>
@@ -112,6 +112,7 @@
         </view>
       </view>
     </view>
+    <custom-tabbar :selected="3" />
   </view>
 </template>
 
@@ -158,10 +159,11 @@ onMounted(() => {
 async function loadMessages() {
   loading.value = true
   try {
-    const data = await messageService.getMessages()
-    messages.value = data
+    const result = await messageService.getMessages()
+    messages.value = Array.isArray(result) ? result : (result?.data || [])
   } catch (e) {
-    console.error('Failed to load messages')
+    console.error('Failed to load messages:', e)
+    messages.value = []
   } finally {
     loading.value = false
   }

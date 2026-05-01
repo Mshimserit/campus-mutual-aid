@@ -3,7 +3,7 @@
 	<text :style="styleObj" class="uni-icons" @click="_onClick">{{unicode}}</text>
 	<!-- #endif -->
 	<!-- #ifndef APP-NVUE -->
-	<text :style="styleObj" class="uni-icons" :class="['uniui-'+type,customPrefix,customPrefix?type:'']" @click="_onClick">
+	<text :style="styleObj" class="uni-icons" :class="['uniui-'+(type||''),customPrefix,customPrefix?type:'']" @click="_onClick">
 		<slot></slot>
 	</text>
 	<!-- #endif -->

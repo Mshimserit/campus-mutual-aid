@@ -8,17 +8,7 @@ import { USE_MOCK } from '@/config'
 import * as api from '@/utils/request'
 
 export function createDataSource(apiService, mockService) {
-  return new Proxy({}, {
-    get(target, prop) {
-      if (USE_MOCK && mockService && mockService[prop]) {
-        return mockService[prop]
-      }
-      if (apiService && apiService[prop]) {
-        return apiService[prop]
-      }
-      return undefined
-    }
-  })
+  return USE_MOCK ? mockService : apiService
 }
 
 export async function fetchWithFallback(apiFn, mockFn, options = {}) {

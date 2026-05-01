@@ -1,6 +1,6 @@
 <template>
   <view class="empty-state" v-if="show">
-    <image :src="icon" class="empty-icon" mode="aspectFit" />
+    <uni-icons :type="iconType" :size="iconSize" :color="iconColor"></uni-icons>
     <text class="empty-text">{{ title }}</text>
     <text v-if="subtitle" class="empty-subtitle">{{ subtitle }}</text>
     <button v-if="showAction" size="default" type="primary" @click="onAction" class="action-btn">
@@ -10,13 +10,6 @@
 </template>
 
 <script>
-/**
- * EmptyState - Reusable empty state display component
- * Features:
- * - Customizable icon, title, subtitle
- * - Optional action button with click handler
- * - Consistent styling across all empty states
- */
 export default {
   name: 'EmptyState',
   props: {
@@ -24,9 +17,17 @@ export default {
       type: Boolean,
       default: true
     },
-    icon: {
+    iconType: {
       type: String,
-      default: '/static/logo.png'
+      default: 'info'
+    },
+    iconSize: {
+      type: Number,
+      default: 60
+    },
+    iconColor: {
+      type: String,
+      default: '#d9d9d9'
     },
     title: {
       type: String,
@@ -63,17 +64,11 @@ export default {
   padding: 60px 20px;
   animation: fadeIn 0.3s ease;
 
-  .empty-icon {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 20px;
-    opacity: 0.5;
-  }
-
   .empty-text {
     font-size: 16px;
     font-weight: 600;
     color: #9CA3AF;
+    margin-top: 16px;
     margin-bottom: 8px;
   }
 

@@ -14,39 +14,9 @@
 			}
 		},
 		{
-			"path": "pages/hot/hot",
-			"style": {
-				"navigationBarTitleText": "热榜"
-			}
-		},
-		{
 			"path": "pages/mutual/list/list",
 			"style": {
 				"navigationBarTitleText": "互助广场"
-			}
-		},
-		{
-			"path": "pages/mutual/detail/detail",
-			"style": {
-				"navigationBarTitleText": "订单详情"
-			}
-		},
-		{
-			"path": "pages/mutual/publish/publish",
-			"style": {
-				"navigationBarTitleText": "发布需求"
-			}
-		},
-		{
-			"path": "pages/mutual/payment/payment",
-			"style": {
-				"navigationBarTitleText": "支付佣金"
-			}
-		},
-		{
-			"path": "pages/mutual/auth/auth",
-			"style": {
-				"navigationBarTitleText": "骑手认证"
 			}
 		},
 		{
@@ -56,31 +26,9 @@
 			}
 		},
 		{
-			"path": "pages/post/editor/editor",
-			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTitleText": "发布帖子"
-			}
-		},
-		{
-			"path": "pages/post/detail/detail",
-			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTitleText": "帖子详情"
-			}
-		},
-		{
 			"path": "pages/message/message",
 			"style": {
 				"navigationBarTitleText": "消息"
-			}
-		},
-		{
-			"path": "pages/search/search",
-			"style": {
-				"navigationBarStyle": "custom",
-				"navigationStyle": "custom",
-				"navigationBarTitleText": "搜索"
 			}
 		},
 		{
@@ -88,96 +36,169 @@
 			"style": {
 				"navigationBarTitleText": "我的"
 			}
+		}
+	],
+	"subPackages": [
+		{
+			"root": "pagesSub/mutual",
+			"pages": [
+				{
+					"path": "detail/detail",
+					"style": {
+						"navigationBarTitleText": "订单详情"
+					}
+				},
+				{
+					"path": "publish/publish",
+					"style": {
+						"navigationBarTitleText": "发布需求"
+					}
+				},
+				{
+					"path": "payment/payment",
+					"style": {
+						"navigationBarTitleText": "支付佣金"
+					}
+				},
+				{
+					"path": "auth/auth",
+					"style": {
+						"navigationBarTitleText": "骑手认证"
+					}
+				}
+			]
 		},
 		{
-			"path": "pages/profile/center/center",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
+			"root": "pagesSub/post",
+			"pages": [
+				{
+					"path": "editor/editor",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTitleText": "发布帖子"
+					}
+				},
+				{
+					"path": "detail/detail",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTitleText": "帖子详情"
+					}
+				}
+			]
 		},
 		{
-			"path": "pages/profile/wallet/wallet",
-			"style": {
-				"navigationBarTitleText": "我的钱包"
-			}
+			"root": "pagesSub/profile",
+			"pages": [
+				{
+					"path": "wallet/wallet",
+					"style": {
+						"navigationBarTitleText": "我的钱包"
+					}
+				},
+				{
+					"path": "wallet/withdraw",
+					"style": {
+						"navigationBarTitleText": "提现"
+					}
+				},
+				{
+					"path": "my-posts/my-posts",
+					"style": {
+						"navigationBarTitleText": "我的帖子"
+					}
+				},
+				{
+					"path": "my-comments/my-comments",
+					"style": {
+						"navigationBarTitleText": "历史评论"
+					}
+				},
+				{
+					"path": "my-watch/my-watch",
+					"style": {
+						"navigationBarTitleText": "我的蹲贴"
+					}
+				},
+				{
+					"path": "my-favorites/my-favorites",
+					"style": {
+						"navigationBarTitleText": "我的收藏"
+					}
+				},
+				{
+					"path": "service/customer-service",
+					"style": {
+						"navigationBarTitleText": "客服"
+					}
+				},
+				{
+					"path": "service/help-center",
+					"style": {
+						"navigationBarTitleText": "帮助中心"
+					}
+				},
+				{
+					"path": "service/appeal",
+					"style": {
+						"navigationBarTitleText": "封禁申诉"
+					}
+				},
+				{
+					"path": "service/feedback",
+					"style": {
+						"navigationBarTitleText": "建议反馈"
+					}
+				},
+				{
+					"path": "settings/business",
+					"style": {
+						"navigationBarTitleText": "商务合作"
+					}
+				},
+				{
+					"path": "auth/campus-auth",
+					"style": {
+						"navigationBarTitleText": "校园认证"
+					}
+				},
+				{
+					"path": "auth/realname-auth",
+					"style": {
+						"navigationBarTitleText": "实名认证"
+					}
+				},
+				{
+					"path": "settings/user-agreement",
+					"style": {
+						"navigationBarTitleText": "用户协议"
+					}
+				},
+				{
+					"path": "settings/privacy-policy",
+					"style": {
+						"navigationBarTitleText": "隐私政策"
+					}
+				}
+			]
 		},
 		{
-			"path": "pages/profile/wallet/withdraw",
-			"style": {
-				"navigationBarTitleText": "提现"
-			}
-		},
-		{
-			"path": "pages/profile/my-posts/my-posts",
-			"style": {
-				"navigationBarTitleText": "我的帖子"
-			}
-		},
-		{
-			"path": "pages/profile/my-comments/my-comments",
-			"style": {
-				"navigationBarTitleText": "历史评论"
-			}
-		},
-		{
-			"path": "pages/profile/my-watch/my-watch",
-			"style": {
-				"navigationBarTitleText": "我的蹲贴"
-			}
-		},
-		{
-			"path": "pages/profile/my-favorites/my-favorites",
-			"style": {
-				"navigationBarTitleText": "我的收藏"
-			}
-		},
-		{
-			"path": "pages/profile/service/customer-service",
-			"style": {
-				"navigationBarTitleText": "客服"
-			}
-		},
-		{
-			"path": "pages/profile/service/help-center",
-			"style": {
-				"navigationBarTitleText": "帮助中心"
-			}
-		},
-		{
-			"path": "pages/profile/service/appeal",
-			"style": {
-				"navigationBarTitleText": "封禁申诉"
-			}
-		},
-		{
-			"path": "pages/profile/service/feedback",
-			"style": {
-				"navigationBarTitleText": "建议反馈"
-			}
-		},
-		{
-			"path": "pages/profile/settings/business",
-			"style": {
-				"navigationBarTitleText": "商务合作"
-			}
-		},
-		{
-			"path": "pages/profile/settings/create-circle",
-			"style": {
-				"navigationBarTitleText": "开通圈子"
-			}
-		},
-		{
-			"path": "pages/profile/settings/user-agreement",
-			"style": {
-				"navigationBarTitleText": "用户协议"
-			}
-		},
-		{
-			"path": "pages/profile/settings/privacy-policy",
-			"style": {
-				"navigationBarTitleText": "隐私政策"
-			}
+			"root": "pagesSub/common",
+			"pages": [
+				{
+					"path": "search/search",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTitleText": "搜索"
+					}
+				},
+				{
+					"path": "hot/hot",
+					"style": {
+						"navigationBarTitleText": "热榜"
+					}
+				}
+			]
 		}
 	],
 	"globalStyle": {
@@ -189,6 +210,7 @@
 		"onReachBottomDistance": 50
 	},
 	"tabBar": {
+		"custom": true,
 		"color": "#999999",
 		"selectedColor": "#1890ff",
 		"borderStyle": "black",
@@ -196,33 +218,23 @@
 		"list": [
 			{
 				"pagePath": "pages/index/index",
-				"text": "首页",
-				"iconPath": "static/tabbar/home.png",
-				"selectedIconPath": "static/tabbar/home-active.png"
+				"text": "首页"
 			},
 			{
 				"pagePath": "pages/mutual/list/list",
-				"text": "互助",
-				"iconPath": "static/tabbar/mutual.png",
-				"selectedIconPath": "static/tabbar/mutual-active.png"
+				"text": "互助"
 			},
 			{
 				"pagePath": "pages/post/post",
-				"text": "发布",
-				"iconPath": "static/tabbar/post.png",
-				"selectedIconPath": "static/tabbar/post-active.png"
+				"text": "发布"
 			},
 			{
 				"pagePath": "pages/message/message",
-				"text": "消息",
-				"iconPath": "static/tabbar/message.png",
-				"selectedIconPath": "static/tabbar/message-active.png"
+				"text": "消息"
 			},
 			{
 				"pagePath": "pages/profile/index/index",
-				"text": "我的",
-				"iconPath": "static/tabbar/profile.png",
-				"selectedIconPath": "static/tabbar/profile-active.png"
+				"text": "我的"
 			}
 		]
 	},
@@ -230,6 +242,30 @@
 		"autoscan": true,
 		"custom": {
 			"^uni-(.*)": "@/uni_modules/uni-$1/components/uni-$1/uni-$1.vue"
+		}
+	},
+	"optimization": {
+		"subPackages": true
+	},
+	"preloadRule": {
+		"pages/index/index": {
+			"network": "all",
+			"packages": [
+				"pagesSub/mutual",
+				"pagesSub/common"
+			]
+		},
+		"pages/profile/index/index": {
+			"network": "all",
+			"packages": [
+				"pagesSub/profile"
+			]
+		},
+		"pages/post/post": {
+			"network": "all",
+			"packages": [
+				"pagesSub/post"
+			]
 		}
 	}
 }

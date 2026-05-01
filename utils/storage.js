@@ -12,7 +12,14 @@ export function get(key, defaultValue = null) {
     if (value === '' || value === undefined) {
       return defaultValue
     }
-    return typeof value === 'string' ? JSON.parse(value) : value
+    if (typeof value === 'string') {
+      try {
+        return JSON.parse(value)
+      } catch (parseError) {
+        return value || defaultValue
+      }
+    }
+    return value
   } catch (e) {
     console.error('[Storage] Get error:', key, e)
     return defaultValue
@@ -69,7 +76,18 @@ export function getExpire(key, defaultValue = null) {
     const data = uni.getStorageSync(fullKey)
     if (!data) return defaultValue
 
-    const { value, expire } = typeof data === 'string' ? JSON.parse(data) : data
+    let parsed
+    if (typeof data === 'string') {
+      try {
+        parsed = JSON.parse(data)
+      } catch (parseError) {
+        return defaultValue
+      }
+    } else {
+      parsed = data
+    }
+
+    const { value, expire } = parsed
     if (expire && Date.now() > expire) {
       remove(key)
       return defaultValue

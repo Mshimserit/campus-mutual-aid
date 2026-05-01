@@ -6,13 +6,12 @@
   "scripts": {
     "dev:mp-weixin": "uni -p mp-weixin",
     "build:mp-weixin": "uni build -p mp-weixin",
+    "build:prod": "uni build -p mp-weixin --minify",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --ext .js,.vue --ignore-path .gitignore . --fix",
     "format": "prettier --write \"**/*.{js,vue,json,scss,css}\"",
-    "format:check": "prettier --check \"**/*.{js,vue,json,scss,css}\""
-  },
-  "dependencies": {
-    "vu-icons": "^1.3.6"
+    "format:check": "prettier --check \"**/*.{js,vue,json,scss,css}\"",
+    "analyze:images": "node scripts/optimize-images.js"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.23.0",

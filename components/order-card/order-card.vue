@@ -38,7 +38,7 @@
     <view class="card-footer">
       <view v-if="canViewDetail" class="commission">
         <text class="commission-label">到手佣金</text>
-        <text class="commission-amount">¥{{ order.commission }}</text>
+        <text class="commission-amount">¥{{ order.commission || order.amount }}</text>
       </view>
       <view v-else class="commission commission-locked">
         <text class="commission-label">佣金</text>
@@ -93,7 +93,7 @@ const canView = computed(() => {
 })
 
 const canViewDetail = computed(() => {
-  return props.order.accepted || props.order.publisherId === userStore.userInfo?.id
+  return props.order.acceptorId === userStore.userInfo?.id || props.order.publisherId === userStore.userInfo?.id
 })
 
 function onAccept() {
@@ -101,7 +101,7 @@ function onAccept() {
 }
 
 function onViewDetail() {
-  uni.navigateTo({ url: `/pages/mutual/detail/detail?id=${props.order.id}` })
+  uni.navigateTo({ url: `/pagesSub/mutual/detail/detail?id=${props.order.id}` })
 }
 
 function onCardClick() {

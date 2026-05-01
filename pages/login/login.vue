@@ -1,21 +1,27 @@
 <template>
 	<view class="login-container">
 		<view class="login-header">
-			<image class="login-logo" src="/static/logo.png" mode="aspectFit"></image>
+			<view class="logo-wrapper">
+				<image class="login-logo" src="/static/logo.png" mode="aspectFit"></image>
+			</view>
 			<text class="login-title">校园互助平台</text>
-			<text class="login-subtitle">登录以继续使用</text>
+			<text class="login-subtitle">让校园生活更便捷</text>
 		</view>
 
 		<view class="login-form">
+			<view class="form-title">账号登录</view>
+
 			<view class="form-item">
-				<view class="input-wrapper">
-					<text class="input-icon">👤</text>
+				<view class="input-wrapper" :class="{ 'input-focus': focusField === 'username' }">
+					<uni-icons type="person" size="20" color="#999"></uni-icons>
 					<input 
 						class="login-input" 
 						v-model="username" 
 						placeholder="请输入用户名"
 						placeholder-class="input-placeholder"
 						@input="onUsernameInput"
+						@focus="focusField = 'username'"
+						@blur="focusField = ''"
 						confirm-type="next"
 					/>
 				</view>
@@ -23,8 +29,8 @@
 			</view>
 
 			<view class="form-item">
-				<view class="input-wrapper">
-					<text class="input-icon">🔒</text>
+				<view class="input-wrapper" :class="{ 'input-focus': focusField === 'password' }">
+					<uni-icons type="locked" size="20" color="#999"></uni-icons>
 					<input 
 						class="login-input" 
 						v-model="password" 
@@ -32,6 +38,8 @@
 						placeholder="请输入密码"
 						placeholder-class="input-placeholder"
 						@input="onPasswordInput"
+						@focus="focusField = 'password'"
+						@blur="focusField = ''"
 						@confirm="handleLogin"
 					/>
 				</view>
@@ -40,23 +48,24 @@
 
 			<text class="login-error" v-if="loginError">{{ loginError }}</text>
 
-			<button class="login-btn" :class="{ 'btn-disabled': isLoading }" @click="handleLogin" :disabled="isLoading">
+			<button class="login-btn" :class="{ 'btn-disabled': isLoading }" @click="handleLogin" :disabled="isLoading" hover-class="btn-hover">
 				<text v-if="!isLoading">登录</text>
 				<text v-else>登录中...</text>
 			</button>
 
-			<view class="test-accounts">
-				<text class="test-title">测试账号：</text>
-				<view class="account-item" @click="fillTestAccount('student')">
-					<text class="account-label">学生账号: student / 123456</text>
+			<view class="demo-account" @click="fillDemoAccount">
+				<view class="demo-icon">
+					<uni-icons type="lightbulb" size="16" color="#ffffff"></uni-icons>
 				</view>
-				<view class="account-item" @click="fillTestAccount('runner')">
-					<text class="account-label">骑手账号: runner / 123456</text>
-				</view>
-				<view class="account-item" @click="fillTestAccount('admin')">
-					<text class="account-label">管理账号: admin / admin123</text>
-				</view>
+				<text class="demo-text">点击填入演示账号 (demo / 123456)</text>
 			</view>
+		</view>
+
+		<view class="login-footer">
+			<text class="footer-text">登录即表示同意</text>
+			<text class="footer-link">《用户协议》</text>
+			<text class="footer-text">和</text>
+			<text class="footer-link">《隐私政策》</text>
 		</view>
 	</view>
 </template>
@@ -74,7 +83,8 @@ export default {
 				username: '',
 				password: ''
 			},
-			isLoading: false
+			isLoading: false,
+			focusField: ''
 		}
 	},
 	computed: {
@@ -91,20 +101,12 @@ export default {
 			this.errors.password = ''
 			this.userStore.clearError()
 		},
-		fillTestAccount(type) {
-			const accounts = {
-				student: { username: 'student', password: '123456' },
-				runner: { username: 'runner', password: '123456' },
-				admin: { username: 'admin', password: 'admin123' }
-			}
-			const account = accounts[type]
-			if (account) {
-				this.username = account.username
-				this.password = account.password
-				this.errors.username = ''
-				this.errors.password = ''
-				this.userStore.clearError()
-			}
+		fillDemoAccount() {
+			this.username = 'demo'
+			this.password = '123456'
+			this.errors.username = ''
+			this.errors.password = ''
+			this.userStore.clearError()
 		},
 		validateForm() {
 			let isValid = true
@@ -158,7 +160,7 @@ export default {
 				console.error('登录失败:', error)
 				uni.showToast({
 					title: '登录失败，请重试',
-					icon: 'error',
+					icon: 'none',
 					duration: 2000
 				})
 			} finally {
@@ -170,82 +172,104 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$primary-color: #1890ff;
+$primary-dark: #096dd9;
+$primary-light: #e6f7ff;
+$text-primary: #1a1a1a;
+$text-secondary: #666666;
+$text-muted: #999999;
+$border-color: #e8e8e8;
+$bg-light: #fafafa;
+
 .login-container {
 	min-height: 100vh;
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	padding: 0 40rpx;
+	background-color: #f5f7fa;
+	padding: 0;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
 }
 
 .login-header {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom: 80rpx;
+	padding: 80rpx 40rpx 60rpx;
+	background: linear-gradient(180deg, #ffffff 0%, #f5f7fa 100%);
 
-	.login-logo {
-		width: 160rpx;
-		height: 160rpx;
-		border-radius: 50%;
-		margin-bottom: 30rpx;
+	.logo-wrapper {
+		width: 120rpx;
+		height: 120rpx;
+		border-radius: 24rpx;
 		background-color: #ffffff;
+		box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 24rpx;
+
+		.login-logo {
+			width: 80rpx;
+			height: 80rpx;
+		}
 	}
 
 	.login-title {
-		font-size: 48rpx;
+		font-size: 44rpx;
 		font-weight: bold;
-		color: #ffffff;
-		margin-bottom: 16rpx;
+		color: $text-primary;
+		margin-bottom: 12rpx;
+		letter-spacing: 1rpx;
 	}
 
 	.login-subtitle {
-		font-size: 28rpx;
-		color: rgba(255, 255, 255, 0.8);
+		font-size: 26rpx;
+		color: $text-muted;
 	}
 }
 
 .login-form {
-	width: 100%;
-	max-width: 600rpx;
+	margin: 0 32rpx;
 	background-color: #ffffff;
 	border-radius: 24rpx;
-	padding: 60rpx 40rpx;
-	box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.15);
+	padding: 48rpx 40rpx;
+	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+
+	.form-title {
+		font-size: 32rpx;
+		font-weight: 600;
+		color: $text-primary;
+		margin-bottom: 40rpx;
+		letter-spacing: 0.5rpx;
+	}
 
 	.form-item {
-		margin-bottom: 30rpx;
+		margin-bottom: 28rpx;
 
 		.input-wrapper {
 			display: flex;
 			align-items: center;
-			background-color: #f5f5f5;
+			background-color: $bg-light;
 			border-radius: 12rpx;
 			padding: 0 24rpx;
 			height: 88rpx;
 			border: 2rpx solid transparent;
-			transition: all 0.3s;
+			transition: all 0.2s ease;
 
-			&:focus-within {
-				border-color: #1890ff;
+			&.input-focus {
+				border-color: $primary-color;
 				background-color: #ffffff;
-			}
-
-			.input-icon {
-				font-size: 36rpx;
-				margin-right: 20rpx;
+				box-shadow: 0 0 0 4rpx rgba(24, 144, 255, 0.1);
 			}
 
 			.login-input {
 				flex: 1;
-				font-size: 32rpx;
-				color: #333333;
+				font-size: 30rpx;
+				color: $text-primary;
+				margin-left: 16rpx;
 			}
 
 			.input-placeholder {
-				color: #999999;
+				color: $text-muted;
 			}
 		}
 
@@ -254,32 +278,34 @@ export default {
 			font-size: 24rpx;
 			color: #ff4d4f;
 			margin-top: 12rpx;
-			padding-left: 24rpx;
+			padding-left: 8rpx;
 		}
 	}
 
 	.login-error {
 		display: block;
-		font-size: 26rpx;
+		font-size: 24rpx;
 		color: #ff4d4f;
 		text-align: center;
-		margin-bottom: 30rpx;
-		padding: 16rpx;
-		background-color: #fff1f0;
+		margin-bottom: 24rpx;
+		padding: 12rpx 16rpx;
+		background-color: #fff2f0;
 		border-radius: 8rpx;
+		border: 1rpx solid #ffccc7;
 	}
 
 	.login-btn {
 		width: 100%;
 		height: 88rpx;
 		line-height: 88rpx;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
 		color: #ffffff;
 		font-size: 32rpx;
-		font-weight: bold;
+		font-weight: 600;
 		border-radius: 12rpx;
 		border: none;
-		margin-bottom: 40rpx;
+		margin-bottom: 32rpx;
+		box-shadow: 0 8rpx 16rpx rgba(24, 144, 255, 0.25);
 
 		&::after {
 			border: none;
@@ -287,38 +313,65 @@ export default {
 
 		&.btn-disabled {
 			opacity: 0.6;
+			box-shadow: none;
 		}
 	}
 
-	.test-accounts {
-		margin-top: 40rpx;
-		padding-top: 40rpx;
-		border-top: 1rpx solid #e8e8e8;
+	.btn-hover {
+		opacity: 0.9;
+		transform: scale(0.98);
+	}
 
-		.test-title {
-			display: block;
-			font-size: 26rpx;
-			color: #666666;
-			margin-bottom: 20rpx;
-			text-align: center;
+	.demo-account {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 12rpx;
+		padding: 20rpx 24rpx;
+		background: linear-gradient(135deg, $primary-light 0%, #f0f5ff 100%);
+		border-radius: 12rpx;
+		border: 1rpx dashed $primary-color;
+
+		.demo-icon {
+			width: 40rpx;
+			height: 40rpx;
+			border-radius: 50%;
+			background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
 		}
 
-		.account-item {
-			padding: 16rpx 24rpx;
-			margin-bottom: 12rpx;
-			background-color: #f9f9f9;
-			border-radius: 8rpx;
-			border: 1rpx solid #e8e8e8;
-
-			.account-label {
-				font-size: 24rpx;
-				color: #1890ff;
-			}
-
-			&:active {
-				background-color: #e6f7ff;
-			}
+		.demo-text {
+			font-size: 24rpx;
+			color: $primary-dark;
+			font-weight: 500;
 		}
+
+		&:active {
+			opacity: 0.8;
+			transform: scale(0.98);
+		}
+	}
+}
+
+.login-footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 48rpx 32rpx;
+	flex-wrap: wrap;
+
+	.footer-text {
+		font-size: 22rpx;
+		color: $text-muted;
+	}
+
+	.footer-link {
+		font-size: 22rpx;
+		color: $primary-color;
+		padding: 0 4rpx;
 	}
 }
 </style>

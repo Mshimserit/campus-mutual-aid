@@ -29,12 +29,12 @@ export function usePagination(options = {}) {
     try {
       const result = await fetchData({
         page: page.value,
-        pageSize: pageSize.value,
+        pageSize: pageSize,
         filters: options.filters
       })
 
       if (Array.isArray(result)) {
-        if (result.length < pageSize.value) {
+        if (result.length < pageSize) {
           hasMore.value = false
         }
         list.value = [...list.value, ...result]

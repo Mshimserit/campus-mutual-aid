@@ -74,26 +74,26 @@
       <view class="section">
         <text class="section-title">内容管理</text>
         <view class="menu-list">
-          <view class="menu-item" @click="goToPage('/pages/profile/my-posts/my-posts')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/my-posts/my-posts')">
             <uni-icons type="compose" size="20" color="#333"></uni-icons>
             <text class="menu-name">我的帖子</text>
             <text class="menu-extra">{{ userInfo.postCount }}</text>
             <uni-icons type="right" size="16" color="#999"></uni-icons>
           </view>
-          <view class="menu-item" @click="goToPage('/pages/profile/my-comments/my-comments')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/my-comments/my-comments')">
             <uni-icons type="chat" size="20" color="#333"></uni-icons>
             <text class="menu-name">历史评论</text>
             <text class="menu-extra">{{ userInfo.commentCount }}</text>
             <uni-icons type="right" size="16" color="#999"></uni-icons>
           </view>
-          <view class="menu-item" @click="goToPage('/pages/profile/my-watch/my-watch')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/my-watch/my-watch')">
             <uni-icons type="eye" size="20" color="#333"></uni-icons>
             <text class="menu-name">我的蹲贴</text>
             <view v-if="hasNewWatch" class="red-dot"></view>
             <text class="menu-extra">{{ userInfo.watchCount }}</text>
             <uni-icons type="right" size="16" color="#999"></uni-icons>
           </view>
-          <view class="menu-item" @click="goToPage('/pages/profile/my-favorites/my-favorites')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/my-favorites/my-favorites')">
             <uni-icons type="star" size="20" color="#333"></uni-icons>
             <text class="menu-name">我的收藏</text>
             <text class="menu-extra">{{ userInfo.favoriteCount }}</text>
@@ -105,7 +105,7 @@
       <view class="section" v-if="hasRiderIncome">
         <text class="section-title">收益管理</text>
         <view class="menu-list">
-          <view class="menu-item" @click="goToPage('/pages/profile/wallet/wallet')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/wallet/wallet')">
             <uni-icons type="wallet" size="20" color="#333"></uni-icons>
             <text class="menu-name">跑腿收益</text>
             <text class="menu-extra income">¥{{ riderIncome }}</text>
@@ -117,23 +117,23 @@
       <view class="section">
         <text class="section-title">服务与支持</text>
         <view class="menu-list">
-          <view class="menu-item" @click="goToPage('/pages/profile/service/customer-service')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/service/customer-service')">
             <uni-icons type="chat" size="20" color="#333"></uni-icons>
             <text class="menu-name">本校客服</text>
             <uni-icons type="right" size="16" color="#999"></uni-icons>
           </view>
-          <view class="menu-item" @click="goToPage('/pages/profile/service/help-center')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/service/help-center')">
             <uni-icons type="staff" size="20" color="#333"></uni-icons>
             <text class="menu-name">官方客服</text>
             <uni-icons type="right" size="16" color="#999"></uni-icons>
           </view>
-          <view class="menu-item" @click="goToPage('/pages/profile/service/appeal')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/service/appeal')">
             <uni-icons type="undo" size="20" color="#333"></uni-icons>
             <text class="menu-name">封禁申诉</text>
             <view v-if="hasAppealResult" class="red-dot"></view>
             <uni-icons type="right" size="16" color="#999"></uni-icons>
           </view>
-          <view class="menu-item" @click="goToPage('/pages/profile/service/feedback')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/service/feedback')">
             <uni-icons type="compose" size="20" color="#333"></uni-icons>
             <text class="menu-name">建议反馈</text>
             <uni-icons type="right" size="16" color="#999"></uni-icons>
@@ -142,25 +142,40 @@
       </view>
 
       <view class="section">
+        <text class="section-title">认证中心</text>
+        <view class="menu-list">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/auth/campus-auth')">
+            <uni-icons type="checkmarkempty" size="20" :color="userInfo.campusCertified ? '#52c41a' : '#333'"></uni-icons>
+            <text class="menu-name">校园认证</text>
+            <view v-if="!userInfo.campusCertified" class="new-tag">未完成</view>
+            <text v-else class="menu-extra" style="color: #52c41a">已通过</text>
+            <uni-icons type="right" size="16" color="#999"></uni-icons>
+          </view>
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/auth/realname-auth')">
+            <uni-icons type="person" size="20" :color="userInfo.realNameCertified ? '#52c41a' : '#333'"></uni-icons>
+            <text class="menu-name">实名认证</text>
+            <view v-if="!userInfo.realNameCertified" class="new-tag">未完成</view>
+            <text v-else class="menu-extra" style="color: #52c41a">已通过</text>
+            <uni-icons type="right" size="16" color="#999"></uni-icons>
+          </view>
+        </view>
+      </view>
+
+      <view class="section">
         <text class="section-title">商务与设置</text>
         <view class="menu-list">
-          <view class="menu-item" @click="goToPage('/pages/profile/settings/business')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/settings/business')">
             <uni-icons type="shop" size="20" color="#333"></uni-icons>
             <text class="menu-name">商务合作</text>
             <uni-icons type="right" size="16" color="#999"></uni-icons>
           </view>
-          <view class="menu-item" @click="goToPage('/pages/profile/settings/create-circle')">
-            <uni-icons type="plus" size="20" color="#333"></uni-icons>
-            <text class="menu-name">开通圈子</text>
-            <uni-icons type="right" size="16" color="#999"></uni-icons>
-          </view>
-          <view class="menu-item" @click="goToPage('/pages/profile/settings/user-agreement')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/settings/user-agreement')">
             <uni-icons type="document" size="20" color="#333"></uni-icons>
             <text class="menu-name">用户协议</text>
             <view v-if="hasAgreementUpdate" class="new-tag">New</view>
             <uni-icons type="right" size="16" color="#999"></uni-icons>
           </view>
-          <view class="menu-item" @click="goToPage('/pages/profile/settings/privacy-policy')">
+          <view class="menu-item" @click="goToPage('/pagesSub/profile/settings/privacy-policy')">
             <uni-icons type="locked" size="20" color="#333"></uni-icons>
             <text class="menu-name">隐私政策</text>
             <view v-if="hasPrivacyUpdate" class="new-tag">New</view>
@@ -178,6 +193,7 @@
     <view class="footer-uid">
       <text>UID: {{ userInfo.uid }}</text>
     </view>
+    <custom-tabbar :selected="4" />
   </view>
 </template>
 
@@ -251,7 +267,7 @@ function loadUserInfo() {
 }
 
 function goToEdit() {
-  uni.navigateTo({ url: '/pages/profile/center/center' })
+  uni.navigateTo({ url: '/pagesSub/profile/center/center' })
 }
 
 function goToPage(url) {
